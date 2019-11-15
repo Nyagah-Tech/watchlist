@@ -1,3 +1,5 @@
+{% extends 'base.html'%}
+{% import 'macros.html' as macro%}
 <!DOCTYPE html>
 <html>
     <head>
@@ -8,4 +10,35 @@
         <title> movie default _111 </title>
         {% endif %}
     </head>
+    <body>
+        {% block content %}
+        <div class="container">
+            <!-- poster background -->
+            <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 posterPath" >
+                        <img src="{{movie.poster}}">
+                    </div> 
+                    <div class ="col-xs-6 col-sm-6 col-md-6 col-lg-6 movie-details">
+                        <h3>{{ movie.title }}</h3>
+
+                        <p class="oveview"> {{movie.overview}} </p>\
+                        <p class="ratings"> <b> {{movie.vote_average}} -<i> {{movie.vote_count}} votes </i> </b></p>
+
+                        <a class ="ratings" href="/movie/review/new/{{movie.id}}">write a new review</a>
+
+                    </div>    
+            </div>
+            <div class="row">
+                <h1>Reviews</h1>
+                <hr>
+                {% if reviews %}
+                    {{macro.displayReviews(reviews)}}
+                {% else %}
+                   <h3 class="text-center">This movie has no reviews</h3>
+                   <a class="btn btn-success btn-lg text-center" href="/movies/review/new/{{movie.id}}">write a new review</a> 
+                {% endif %}
+            </div>
+        </div>      
+        {% endblock%}
+    </body>
 </html>
